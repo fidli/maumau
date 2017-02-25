@@ -10,6 +10,8 @@ struct LocalTime{
     uint16 hour;
     uint16 minute;
     uint16 second;
+    
+    uint16 millisecond;
 };
 
 static bool transitionYear(const uint16 year){
@@ -24,6 +26,17 @@ bool isLocalTimeValid(const LocalTime * time){
         (!(time->month & 1) && time->month != 2) || (time->month == 2 && transitionYear(time->year) && time->day <= 29) || (time->month == 2 && !transitionYear(time->year) && time->day <= 28);
     
     return clock && date && sense;
+}
+
+bool operator!=(const LocalTime a, const LocalTime b){
+    return
+        a.day != b.day ||
+        a.month != b.month ||
+        a.year != b.year ||
+        a.hour != b.hour ||
+        a.minute != b.minute ||
+        a.second != b.second ||
+        a.millisecond != b.millisecond;
 }
 
 bool initTime();

@@ -200,6 +200,10 @@ union v2{
         float32 pitch;
         float32 yaw;
     };
+    struct{
+        float32 w;
+        float32 h;
+    };
     float32 v[2];
 };
 

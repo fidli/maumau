@@ -55,6 +55,7 @@
  
 #include "util_string.cpp"
 #include "windows_time.cpp"
+#include "windows_filesystem.cpp"
 #include "windows_render.cpp"
 #include "windows_audio.cpp"
 #include "clientcode.cpp"
@@ -211,8 +212,14 @@
                                                          timeAccumulator += frameTime;
                                                          
                                                          
-                                                         FLUSH;
                                                          
+                                                         
+                                                         if(!checkAndReloadShaders() && renderer.gl.program == 0){
+                                                             ASSERT(!"shaders fucked");
+                                                             break;
+                                                         };
+                                                         
+                                                         FLUSH;
                                                          
                                                          MSG msg;
                                                          while(PeekMessage(&msg, context.window, 0, 0, PM_REMOVE))
@@ -236,11 +243,11 @@
                                                          
                                                          
                                                          
-                                                         InvalidateRect(context.window, NULL, TRUE);                       
+                                                         ASSERT(SwapBuffers(dc) != false);
                                                      }
                                                      
                                                      
-                                                     
+                                                     destroyShaders();
                                                      
                                                      
                                                  }else{
@@ -270,7 +277,7 @@
                                  //log
                                  ASSERT(!"failed to set current context");
                              }
-                             
+                             wglDeleteContext(opengl);
                          }else{
                              //log
                              ASSERT(!"failed to create context");

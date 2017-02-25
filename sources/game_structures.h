@@ -9,10 +9,17 @@ struct Font{
     uint32 gridHeight;
 };
 
-struct World{
-    
+
+enum GameScreenType{
+    GameScreenType_Void,
+    GameScreenType_GameLobby
 };
 
+struct World{
+    GameScreenType currentScreen;
+    
+    
+};
 
 
 

@@ -19,6 +19,19 @@ float32 getProcessCurrentTime(){
     
 }
 
+LocalTime sysToLocal(const SYSTEMTIME * time){
+    LocalTime result = {};
+    result.year = time->wYear;
+    result.month = time->wMonth;
+    result.day = time->wDay;
+    
+    result.hour = time->wHour;
+    result.minute = time->wMinute;
+    result.second = time->wSecond;
+    result.millisecond = time->wMilliseconds;
+    return result;
+}
+
 
 LocalTime getLocalTime(){
     
@@ -27,16 +40,11 @@ LocalTime getLocalTime(){
     SYSTEMTIME time;
     GetLocalTime(&time);
     
-    result.year = time.wYear;
-    result.month = time.wMonth;
-    result.day = time.wDay;
-    
-    result.hour = time.wHour;
-    result.minute = time.wMinute;
-    result.second = time.wSecond;
+    result = sysToLocal(&time);
     
     return result;
 }
+
 
 bool setLocalTime(const LocalTime * source){
     SYSTEMTIME time = {};
