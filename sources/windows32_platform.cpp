@@ -130,8 +130,15 @@
                             }
                             if(success)
                             {
-                                initGame();
-                                while(run());
+                                initGameTable(2);
+                                bool runGame = true;
+                                do
+                                {
+                                    run();
+                                    runGame = isGameTableFinished();
+                                }
+                                while(runGame);
+                                
                                 
                             }else{
                                 //system argument parsing failed
